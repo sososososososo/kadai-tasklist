@@ -3,7 +3,8 @@ class TasksController < ApplicationController
   
   
   def index
-    @tasks = Task.all
+    #@tasks = Task.all
+    @tasks = Task.order(created_at: :desc).all.page(params[:page]).per(5)
   end
 
   def show
@@ -49,7 +50,7 @@ class TasksController < ApplicationController
   
   private
   def task_params
-    params.require(:task).permit(:content)
+    params.require(:task).permit(:content, :status)
   end
   
   def set_task
@@ -57,7 +58,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:content)
+    params.require(:task).permit(:content, :status)
   end
   
 end
