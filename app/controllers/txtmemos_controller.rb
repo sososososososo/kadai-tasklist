@@ -1,4 +1,4 @@
-class TasksController < ApplicationController
+class TxtmemosController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
     #@tasks = Task.all
@@ -6,7 +6,10 @@ class TasksController < ApplicationController
   end
   
   def show
-    @txtmemo = Txtmemo.find_by(id: params[:id])
+   # p params
+   # raise
+    #@txtmemo = Txtmemo.find_by(id: params[:user_id])
+    #@txtmemo = Txtmemo.find_by(id: session[:txtmemo_id])
   end
 
   def new
@@ -14,8 +17,14 @@ class TasksController < ApplicationController
   end
 
   def create
-    @txtmemo = Txtmemo.new(task_params)
-    @txtmemo.user = User.find_by(id: session[:user_id])
+    #@txtmemo = Txtmemo.new(task_params)
+    #@txtmemo.user = User.find_by(id: session[:user_id])
+    
+    @txtmemo = current_user.txtmemos.build(txtmemo_params)
+    
+    #p @txtmemo
+    #raise
+    
     if @txtmemo.save
       flash[:success] = 'Task が正常に投稿されました'
       redirect_to @txtmemo
@@ -26,11 +35,12 @@ class TasksController < ApplicationController
   end
 
   def edit
+    #@txtmemo = Txtmemo.find_by(params[:id])
   end
 
   def update
-    @txtmemo = Txtmemo.new(task_params)
-    @txtmemo.user = @current_user
+    #@txtmemo = Txtmemo.new(task_params)
+    #@txtmemo.user = User.find_by(id: session[:user_id])
     if @txtmemo.update(task_params)
       flash[:success] = 'Task は正常に更新されました'
       redirect_to @txtmemo
@@ -45,17 +55,20 @@ class TasksController < ApplicationController
     @txtmemo.destroy
 
     flash[:success] = 'Task は正常に削除されました'
-    redirect_to tasks_url
+    redirect_to user_path(current_user.id)
   end
   
   
   private
   def task_params
-    params.require(:txtmemo).permit(:content, :status)
+    params.require(:txtmemo).permit(:id, :content, :status)
   end
   
   def set_task
-    @txtmemo = Txtmemo.find_by(id: params[:txtmemo_id])
+    @txtmemo = Txtmemo.find_by(id: params[:id])
   end
   
+  def txtmemo_params
+    params.require(:txtmemo).permit(:id, :content, :status)
+  end
 end

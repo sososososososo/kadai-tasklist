@@ -15,6 +15,5 @@
   </tr>
 </table>
 
-<%= link_to 'このTaskを編集する', edit_task_path(@txtmemo), class: 'btn btn-default' %>
+<%= link_to 'このTaskを編集する', edit_txtmemo_path(@txtmemo), class: 'btn btn-default' %>
 <%= link_to 'このTaskを削除する', @txtmemo, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger' %>
-

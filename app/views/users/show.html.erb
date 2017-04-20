@@ -1,4 +1,4 @@
-<h1>Task List</h1>
+<h1>Tasaaaak List</h1>
 
 
   <table class="table table-striped">
@@ -15,7 +15,7 @@
 
         <tr>
           <td>
-<%= link_to txtmemo.id, "/txtmemo/#{txtmemo.id}" %>
+<%= link_to txtmemo.id, txtmemo_path(txtmemo.id) %>
 </td>
           <td>
 <%= txtmemo.status %>
@@ -32,7 +32,7 @@
 <%= paginate @txtmemos %>
 <br>
 
-<%= link_to 'new task', new_task_path, class: "btn btn-primary" %>
+<%= link_to 'new task', new_txtmemo_path, class: "btn btn-primary" %>
 
 
 
